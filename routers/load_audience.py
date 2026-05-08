@@ -2,6 +2,7 @@ import httpx
 import asyncio
 import random
 from datetime import datetime, timezone, timedelta
+from config import ZMP_BASE_URL
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -388,7 +389,7 @@ async def load_audience(req: LoadAudienceRequest):
     if not req.profiles:
         raise HTTPException(status_code=400, detail="No profiles provided")
 
-    url = f"https://api.zetaglobal.net/ver2/{req.site_id}/subscribers"
+    url = f"{ZMP_BASE_URL}/{req.site_id}/subscribers"
     auth = ("api", req.api_key)
     run_ts = str(int(datetime.now(timezone.utc).timestamp()))
 

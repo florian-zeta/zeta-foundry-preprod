@@ -1,6 +1,7 @@
 import httpx
 import asyncio
 import logging
+from config import ZMP_BASE_URL
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -134,7 +135,7 @@ async def build_snippets(req: BuildSnippetsRequest):
     if not req.snippets:
         raise HTTPException(status_code=400, detail="No snippets provided")
 
-    base_url = f"https://api.zetaglobal.net/ver2/{req.site_id}"
+    base_url = f"{ZMP_BASE_URL}/{req.site_id}"
     auth = ("api", req.api_key)
 
     logger.info(f"build_snippets: site={req.site_id} count={len(req.snippets)}")
