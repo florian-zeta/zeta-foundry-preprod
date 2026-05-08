@@ -3,7 +3,6 @@ import asyncio
 import random
 import logging
 from datetime import datetime, timezone, timedelta
-from config import ZMP_BASE_URL
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -251,7 +250,7 @@ async def build_events(req: BuildEventsRequest):
         f"catalog={len(catalog)} rich_event={rich_event_name} vertical={v}"
     )
 
-    url = f"{ZMP_BASE_URL}/{req.site_id}/activities"
+    url = f"https://api.zetaglobal.net/ver2/{req.site_id}/activities"
     auth = ("api", req.api_key)
 
     payloads = []

@@ -1,6 +1,5 @@
 import httpx
 import logging
-from config import ZMP_BASE_URL
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -44,7 +43,7 @@ def _assemble_message_html(snippet_names: list[str]) -> str:
 )
 async def build_campaign(req: BuildCampaignRequest):
     auth = ("api", req.api_key)
-    base_url = f"{ZMP_BASE_URL}/{req.site_id}"
+    base_url = f"https://api.zetaglobal.net/ver2/{req.site_id}"
     message_html = _assemble_message_html(req.snippet_names)
 
     logger.info(f"build_campaign: site={req.site_id} name={req.campaign_name}")

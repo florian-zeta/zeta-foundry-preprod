@@ -1,5 +1,4 @@
 import httpx
-from config import ZMP_BASE_URL
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -38,7 +37,7 @@ def _build_template_html(snippet_names: list[str]) -> str:
              '</head>', '<body style="margin:0;padding:0;">']
 
     for name in snippet_names:
-        lines.append(f"{{% snippet name: '{name}' %}}")
+        lines.append(f'{{% snippet "{name}" %}}')
 
     lines.extend(['</body>', '</html>'])
     return '\n'.join(lines)
@@ -56,7 +55,7 @@ def _build_template_html(snippet_names: list[str]) -> str:
 async def build_template(req: BuildTemplateRequest):
     html = _build_template_html(req.snippet_names)
 
-    url = f"{ZMP_BASE_URL}/{req.site_id}/templates"
+    url = f"https://api.zetaglobal.net/ver2/{req.site_id}/templates"
     auth = ("api", req.api_key)
 
     payload = {"name": req.name, "html": html}

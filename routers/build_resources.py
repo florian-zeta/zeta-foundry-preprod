@@ -1,7 +1,6 @@
 import httpx
 import asyncio
 from datetime import datetime, timezone
-from config import ZMP_BASE_URL
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -151,7 +150,7 @@ async def _put_resource(
 async def build_resources(req: BuildResourcesRequest):
     run_ts = str(int(datetime.now(timezone.utc).timestamp()))
     auth = ("api", req.api_key)
-    base_url = f"{ZMP_BASE_URL}/{req.site_id}/resources"
+    base_url = f"https://api.zetaglobal.net/ver2/{req.site_id}/resources"
 
     all_items = []
     for rtype in req.resource_types:
